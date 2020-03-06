@@ -1,0 +1,36 @@
+.product-info .table-detail table,
+.move-top .table-detail table {
+  margin-bottom: 20px; }
+
+.product-info .table-detail thead,
+.move-top .table-detail thead {
+  background: transparent !important; }
+
+.product-info .table-detail tr,
+.move-top .table-detail tr {
+  border-bottom: 1px solid #C5C5C5; }
+  .product-info .table-detail tr th, .product-info .table-detail tr td,
+  .move-top .table-detail tr th,
+  .move-top .table-detail tr td {
+    border: none !important;
+    background: transparent !important;
+    padding: 15px 20px; }
+    .product-info .table-detail tr th:nth-child(1), .product-info .table-detail tr td:nth-child(1),
+    .move-top .table-detail tr th:nth-child(1),
+    .move-top .table-detail tr td:nth-child(1) {
+      width: 300px; }
+  .product-info .table-detail tr td:nth-last-child(1),
+  .move-top .table-detail tr td:nth-last-child(1) {
+    vertical-align: top !important; }
+  .product-info .table-detail tr .qty-input,
+  .move-top .table-detail tr .qty-input {
+    width: 60px;
+    border-radius: 50px;
+    border: 2px solid #C5C5C5 !important;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 18px;
+    cursor: pointer; }
+    .product-info .table-detail tr .qty-input:hover,
+    .move-top .table-detail tr .qty-input:hover {
+      background: #EEEDEF; }
