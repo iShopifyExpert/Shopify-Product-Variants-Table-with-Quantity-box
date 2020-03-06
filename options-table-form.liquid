@@ -1,0 +1,82 @@
+<form action="/cart/add" method="post" enctype="multipart/form-data" class="product-form product-form-{{ section.id }}{% unless section.settings.show_variant_labels %} product-form--hide-variant-labels{% endunless %}" data-section="{{ section.id }}">
+                {% unless product.options.size == 1 and product.variants[0].title == 'Default Title' %}
+                <div class="table-detail desktop" special-duplicate="duplicate-t-product">
+                  <table class="table-responsive">
+                    <thead>
+                      <tr>                                         
+                        <th>Product Option</th>
+                        <th>SKU</th>
+                        <th style="width: 116px;">Price</th>
+                        <th>Quantity</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for variant in product.variants %} 
+                      <tr>                       
+                        <td><span class="text-blue">{{variant.title}}</span><br>
+                          {% if variant.compare_at_price > variant.price %}<span class="text-red">
+                          You save {{ variant.compare_at_price | minus: variant.price | money }}!
+                          </span>{% endif %}
+                        </td>
+                        <td>{{variant.sku}}</td>
+                        <td>
+                          <meta itemprop="priceCurrency" content="{{ shop.currency }}">
+                          <link itemprop="availability" href="http://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}">
+
+                          <p class="product-single__price-{{ section.id }}{% unless variant.available %} product-price--sold-out{% endunless %}">
+                            {% if variant.compare_at_price > variant.price %}
+                            <span class="visually-hidden">{{ 'products.product.regular_price' | t }}</span>
+                            <span class="product-price__price product-price__price-{{ section.id }} product-price__sale product-price__sale--single">
+                              <span class="text-red" id="ProductPrice-{{ section.id }}"
+                                    itemprop="price" content="{{ variant.price | divided_by: 100.00 }}">
+                                {{ 'products.product.on_sale' | t }}  {{ variant.price | money }}
+                              </span>
+                            </span>
+                            <span id="ComparePrice-{{ section.id }}">Reg. {{ variant.compare_at_price | money }}</span>
+                            {% else %}
+                            <span class="visually-hidden">{{ 'products.product.regular_price' | t }}</span>
+                            <s id="ComparePrice-{{ section.id }}" class="hide">{{ variant.compare_at_price | money }}</s>
+                            <span class="product-price__price product-price__price-{{ section.id }}">
+                              <span id="ProductPrice-{{ section.id }}"
+                                    itemprop="price" content="{{ variant.price | divided_by: 100.00 }}">
+                                {{ variant.price | money }}
+                              </span>
+                              <span class="product-price__sale-label product-price__sale-label-{{ section.id }} hide">{{ 'products.product.on_sale' | t }}</span>
+                            </span>
+                            {% endif %}
+                          </p>
+                          <!--<span class="text-red">Sale {{variant.price | money}}</span><br>{% if variant.compare_at_price != blank %}Was $155.00{% endif %} -->
+                        </td>
+                        <td>
+                          <input type="hidden" class="var-input" id="variant-{{forloop.index}}" value="{{variant.id}}">
+                          <input type="text" class="qty-input qtyy" name="{{variant.title}}" id="quantity-{{forloop.index}}">
+                        </td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+                {% else %}
+                <div class="haveonly-variant table-detail desktop" special-duplicate="duplicate-t-product">
+                  <table class="table-responsive">
+                    <tbody>
+                      {% for variant in product.variants %} 
+                      <tr>
+                        <td>
+                          <meta itemprop="priceCurrency" content="{{ shop.currency }}">
+                          <link itemprop="availability" href="http://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}">
+                          <label>Quantity</label>
+                          <input type="hidden" class="var-input" id="variant-{{forloop.index}}" value="{{variant.id}}">
+                          <input type="text" class="qty-input qtyy" name="{{variant.title}}" id="quantity-{{forloop.index}}">
+                        </td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                  <div class="no-variant-btn">
+                    <a href="javascript:void(0);" class="button green invert big with-icon add_to_cart">Add to Cart</a>
+                    {% comment %}<small>{% include 'wishlist-product' %}</small>{% endcomment %}
+                  </div>
+                </div> 
+                {% endunless %}
+</form>
